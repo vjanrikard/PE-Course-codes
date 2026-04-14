@@ -1,6 +1,12 @@
+import os
+
 import openai
 
-openai.api_key = "sk-XX"
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("Sett OPENAI_API_KEY som en miljo-variabel for du starter scriptet.")
+
+openai.api_key = api_key
 
 selected_model = "gpt-3.5-turbo"
 # Initialize the list of messages
@@ -14,7 +20,7 @@ def continue_chat(user_message):
 
     # Get the chat response
     response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",  # or gpt-4 if available
+        model=selected_model,
         messages=messages,  # the list of all messages
     )
     # Add the AI's response to the list
